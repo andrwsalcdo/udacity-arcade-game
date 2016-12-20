@@ -1,6 +1,6 @@
 // ******global global parameters*********//
-var Canvas_width = 806;
-var Canvas_height = 806;
+var Canvas_width = 808;
+var Canvas_height = 808;
 var Player_start_x = 300;
 var Player_start_y = 575;
 
@@ -127,7 +127,19 @@ Player.prototype.render = function() {
 // TODO: Update the player's position, required method for game
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function(dt) {
-
+  // preventing player moving off the canvas...boundary
+  if (this.x > 700) {
+      this.x = 700; // highest x for player
+  }
+  if (this.x < 0) {
+      this.x = 0; //origin
+  }
+  if (this.y > Player_start_y) {
+      this.y = Player_start_y; //don't allow down movement. mu haha.
+  }
+  if (this.y < -12) {
+      this.y = -10; //  -(10+70) < 81, so player fits snuggly inside row
+  }
 }
 
 //Enable the player to be moved around the canvas

@@ -64,8 +64,8 @@ allEnemies.push(enemy0,enemy1,enemy2,enemy3);
 //************** Enemy moving RIGHT-left  ********************//
 var EnemyR = function(x,y, originalPosition, width, height) {
   Entity.call (this, x, y, originalPosition);
-  this.width = 70;
-  this.height = 60;
+  this.width = 85; //70
+  this.height = 65; //60
   this.speed = Math.floor(Math.random() * 200) + 100;
   this.sprite = 'images/enemy-bug-r.png';
 };
@@ -109,38 +109,50 @@ var Player = function(x,y) {
 };
 
 Player.prototype.reset = function() {
-  this.x = Player_start_x;
-  this.y = Player_start_y;
+  this.x = 300;
+  this.y = 575;
   // this.lives = 5;
   this.sprite = 'images/char-boy.png';
 }
 
-// ----TODO when the player collides-----
+// ----when the player collides with enemy -----
 // Player.prototype.collision = function() {
-//
+//     //scenario 1: game reset.(lives=0, TODO:lives,game function: lose,reset)
+//     this.reset();
 // }
 
 Player.prototype.render = function() {
     ctx.drawImage (Resources.get(this.sprite), this.x, this.y);
 };
 
-// TODO: Update the player's position, required method for game
+// Update the player's position, required method for game
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function(dt) {
   // preventing player moving off the canvas...boundary
   if (this.x > 700) {
-      this.x = 700; // highest x for player
+      this.x = 700; // highest x for player--right
   }
   if (this.x < 0) {
-      this.x = 0; //origin
+      this.x = 0; //left boundary
   }
   if (this.y > Player_start_y) {
       this.y = Player_start_y; //don't allow down movement. mu haha.
   }
-  if (this.y < -12) {
-      this.y = -10; //  -(10+70) < 81, so player fits snuggly inside row
+  if (this.y < -12) { //-(10+70) < 83, player fits snuggly inside row
+      this.y = -10; //  70 = player height, 83 = row size.
   }
-}
+
+  //Collide with ENEMY BUGS
+  for (i=0; i < allEnemies.length; i++) {
+    if (this.x < allEnemies[i].x + allEnemies[i].width &&
+        this.x + this.width > allEnemies[i].x &&
+        this.y < allEnemies[i].y + allEnemies[i].height &&
+        this.y + this.height > allEnemies[i].y) {
+            this.reset(); //game over scenario...more to add later.
+        }
+  }
+};
+
 
 //Enable the player to be moved around the canvas
 Player.prototype.handleInput = function(movement) {

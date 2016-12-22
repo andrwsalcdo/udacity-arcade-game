@@ -30,6 +30,22 @@ Entity.prototype.render = function() {
     ctx.drawImage (Resources.get(this.sprite), this.x, this.y);
 };
 
+//***************   SUB-CLASS   ********************//
+//************** Gems to collect *****************//
+var Gem = function (x,y, originalPosition, width, height) {
+    Entity.call (this, x, y, originalPosition, width, height);
+    this.sprite = 'images/Gem-Blue1.png';
+};
+
+Gem.prototype = Object.create(Entity.prototype);
+var allGems = [];
+var gem1 = new Gem (517,503); //a bit of trial & error to center it.
+var gem2 = new Gem (10,418);
+var gem3 = new Gem (720,88);
+allGems.push(gem1,gem2,gem3);
+
+var collectedGems = []; // (x,y) of gems obtained
+
 //***********   SUB CLASS   ********************//
 //************** Enemy moving LEFT-right  ********************//
 var EnemyL = function(x,y, originalPosition, width, height) {

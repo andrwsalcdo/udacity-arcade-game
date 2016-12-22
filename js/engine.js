@@ -156,6 +156,10 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+        allGems.forEach(function(gem) {
+            gem.render();
+        });
+
         player.render();
     }
 
@@ -178,7 +182,8 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/enemy-bug-r.png'
+        'images/enemy-bug-r.png',
+        'images/Gem-Blue1.png'
     ]);
     Resources.onReady(init);
 

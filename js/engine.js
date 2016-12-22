@@ -97,7 +97,7 @@ var Engine = (function(global) {
         });
 
         player.update();
-        // player.reset(); 
+        // player.reset();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -112,13 +112,13 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 6 of stone
-                'images/stone-block.png',   // Row 2 of 6 of stone
-                'images/stone-block.png',   // Row 3 of 6 of stone
-                'images/stone-block.png',   // Row 4 of 6 of stone
-                'images/stone-block.png',   // Row 5 of 6 of stone
-                'images/stone-block.png',   // Row 6 of 6 of stone
-                'images/grass-block.png',   // Bottom Row is grass
+                'images/grass-block.png',   // Row 1 of 6 is grass
+                'images/grass-block.png',   // Row 2 of 6 is grass
+                'images/grass-block.png',   // Row 3 of 6 is grass
+                'images/grass-block.png',   // Row 4 of 6 is grass
+                'images/grass-block.png',   // Row 5 of 6 is grass
+                'images/grass-block.png',   // Row 6 of 6 is grass
+                'images/stone-block.png',   // Bottom Row stone
             ],
             numRows = 8,
             numCols = 8,

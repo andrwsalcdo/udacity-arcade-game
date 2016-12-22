@@ -12,7 +12,7 @@ var Player_start_y = 575;
 //***********   SUPER CLASS   ********************//
 //************** ENTITIES IN THE GAME ********************//
 //***********(Not Include the Player)******************//
-
+        //entity this will be handy when include rocks,gem,starts, etc!
 var Entity = function (x,y) {
     this.x = x;
     this.y = y;
@@ -141,8 +141,13 @@ Player.prototype.update = function(dt) {
   if (this.y < -12) { //-(10+70) < 83, player fits snuggly inside row
       this.y = -10; //  70 = player height, 83 = row size.
   }
+  if (this.y === -6) { //# based on trial and error.
+    setTimeout(function() {
+      player.reset(); //player reaches h20..resets game after 1s.
+    }, 1000);
+  }
 
-  //Collide with ENEMY BUGS
+  // Collide with ENEMY BUGS
   for (i=0; i < allEnemies.length; i++) {
     if (this.x < allEnemies[i].x + allEnemies[i].width &&
         this.x + this.width > allEnemies[i].x &&

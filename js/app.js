@@ -34,21 +34,21 @@ Entity.prototype.render = function() {
 //****************** Rocks: obstacles******************//
 var Rock = function(x,y, originalPosition, width, height) {
   Entity.call (this, x, y, originalPosition, width, height);
-  this.sprite = 'images/Rock.png';
+  this.sprite = 'images/Rock1.png';
 }
 Rock.prototype = Object.create(Entity.prototype);
 
 var allRocks = [];
 //the obstacles
-var rock1 = new Rock (608,478);
-var rock2 = new Rock (508,392);
-var rock3 = new Rock (203,307);
-var rock4 = new Rock (303,307);
-var rock5 = new Rock (403,224);
-var rock6 = new Rock (708,224);
-var rock7 = new Rock (100,142);
-var rock8 = new Rock (100,-22);
-var rock9 = new Rock (503,-22);
+var rock1 = new Rock (608,498);
+var rock2 = new Rock (508,412);
+var rock3 = new Rock (206,327);
+var rock4 = new Rock (306,327);
+var rock5 = new Rock (407,244);
+var rock6 = new Rock (713,244);
+var rock7 = new Rock (104,162);
+var rock8 = new Rock (107,-5);
+var rock9 = new Rock (511,-5);
 allRocks.push(rock1,rock2,rock3,rock4,rock5,rock6,rock7,rock8,rock9);
 
 var collectedRocks = []; // (x,y) of the hearts collected
@@ -156,6 +156,8 @@ allEnemies.push(enemy4,enemy5,enemy6,enemy7,enemy8,enemy9);
 var Player = function(x,y) {
   this.x = x;
   this.y = y;
+  //record the x,y coordinates of the player for non-enemy collisions
+  this.playerPosition = []; // [ [x,y], [x,y], [x,y], etc... ]
   this.width = 60;
   this.height = 70;
   // this.lives = 5; //how to add on html bar, etc
@@ -210,21 +212,65 @@ Player.prototype.update = function(dt) {
             this.reset(); //game over scenario...more to add later.
         }
   }
+  //Hit the rocks. can't move past them
+  for (i=0; i < allRocks.length; i++) {
+      if (this.x < allRocks[i].x + allRocks[i].width &&
+          this.x + this.width > allRocks[i].x &&
+          this.y < allRocks[i].y + allRocks[i].height &&
+          this.y + this.height > allRocks[i].y) {
+            this.x = this.playerPosition[this.playerPosition.length-1][0];
+            this.y = this.playerPosition[this.playerPosition.length-1][1];
+          }
+  }
+  //collect hearts....todo: gain lives. 
+  for (i=0; i < allHearts.length; i++) {
+    if (this.x < allHearts[i].x + allHearts[i].width &&
+        this.x + this.width > allHearts[i].x &&
+        this.y < allHearts[i].y + allHearts[i].height &&
+        this.y + this.height > allHearts[i].y) {
+          collectedHearts.push([allHearts[i].x,allHearts[i].y]);
+          //TODO: add -->>> this.lives += 1;
+          //TODO: add html..psuedo-code -->> "Live(s): " + this.lives;
+          //move the heart off the canvas. disappear
+          allHearts[i].x = 1000;
+          allHearts[i].y = 1000;
+        }
+  }
+  // collect Gems.
+  for (i = 0; i < allGems.length; i++) {
+    if (this.x < allGems[i].x + allGems[i].width &&
+        this.x + this.width > allGems[i].x &&
+        this.y < allGems[i].y + allGems[i].height &&
+        this.y + this.height > allGems[i].y) {
+          collectedGems.push([allGems[i].x, allGems[i].y]);
+          //TODO: add html..psuedo-code -->> "Gems Collected: " + collectedGems.length;
+          //move the gem off the canvas. disappear
+          allGems[i].x = 1000;
+          allGems[i].y = 1000;
+        }
+    }
 };
 
 
 //Enable the player to be moved around the canvas
 Player.prototype.handleInput = function(movement) {
   if (movement == "left") {
+    //keep track of [x,y]..to help with non-enemy collisions.
+    //before this code, player wouldn't move after 'hitting' non-enmy objects
+    //very much of console.log([this.x, this.y]);
+    this.playerPosition.push([this.x, this.y]);
     this.x -= 100;
   }
   if (movement == 'right') {
+    this.playerPosition.push([this.x, this.y]);
     this.x += 100;
   }
   if (movement == "up") {
+    this.playerPosition.push([this.x, this.y]);
     this.y -= 83;
   }
   if (movement == "down") {
+    this.playerPosition.push([this.x, this.y]);
     this.y += 83;
   }
 };

@@ -30,6 +30,44 @@ Entity.prototype.render = function() {
     ctx.drawImage (Resources.get(this.sprite), this.x, this.y);
 };
 
+//*****************   SUB-CLASS   *****************//
+//****************** Rocks: obstacles******************//
+var Rock = function(x,y, originalPosition, width, height) {
+  Entity.call (this, x, y, originalPosition, width, height);
+  this.sprite = 'images/Rock.png';
+}
+Rock.prototype = Object.create(Entity.prototype);
+
+var allRocks = [];
+//the obstacles
+var rock1 = new Rock (608,478);
+var rock2 = new Rock (508,392);
+var rock3 = new Rock (203,307);
+var rock4 = new Rock (303,307);
+var rock5 = new Rock (403,224);
+var rock6 = new Rock (708,224);
+var rock7 = new Rock (100,142);
+var rock8 = new Rock (100,-22);
+var rock9 = new Rock (503,-22);
+allRocks.push(rock1,rock2,rock3,rock4,rock5,rock6,rock7,rock8,rock9);
+
+var collectedRocks = []; // (x,y) of the hearts collected
+
+//*****************   SUB-CLASS   *****************//
+//****************** Hearts: lives******************//
+var Heart = function(x,y, originalPosition, width, height) {
+  Entity.call (this, x, y, originalPosition, width, height);
+  this.sprite = 'images/Heart1.png';
+}
+Heart.prototype = Object.create(Entity.prototype);
+
+var allHearts = [];
+var heart1 = new Heart (608,419);
+var heart2 = new Heart (305,249);
+allHearts.push(heart1,heart2);
+
+var collectedHearts = []; // (x,y) of the hearts collected
+
 //***************   SUB-CLASS   ********************//
 //************** Gems to collect *****************//
 var Gem = function (x,y, originalPosition, width, height) {

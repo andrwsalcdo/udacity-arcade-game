@@ -155,7 +155,12 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
+        allRocks.forEach(function(rock) {
+            rock.render();
+        });
+        allHearts.forEach(function(heart) {
+            heart.render();
+        });
         allGems.forEach(function(gem) {
             gem.render();
         });
@@ -183,7 +188,9 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png',
         'images/enemy-bug-r.png',
-        'images/Gem-Blue1.png'
+        'images/Gem-Blue1.png',
+        'images/Heart1.png',
+        'images/Rock.png'
     ]);
     Resources.onReady(init);
 

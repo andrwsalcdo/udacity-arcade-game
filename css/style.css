@@ -1,3 +1,29 @@
 body {
     text-align: center;
 }
+/* Menu */
+.menu {
+    width: 808px;
+    height: 60px;
+    margin: 0 auto;
+    padding-top: 30px;
+    text-align: left;
+    font-size: 50px;
+}
+
+.lives,
+.gems {
+    vertical-align: top;
+}
+
+.items {
+    float: left;
+    width: 20%;
+}
+
+/*.level {
+    float: right;
+    text-align: right;
+    width: 25%;
+    letter-spacing: -5px;
+}*/

@@ -4,15 +4,55 @@ var Canvas_height = 808;
 var Player_start_x = 300;
 var Player_start_y = 575;
 
+//***********   GAME FUNCTIONS  ********************//
+//************** START, RESET, WIN ********************//
+var Game = function() {};
 
+Game.prototype.win = function() {
+    alert ("CONGRATS! YOU WIN!"); ////**To play again: Refresh the page**
+    this.resetGame();
+};
 
+Game.prototype.lose = function() {
+    alert ("GAME OVER!");
+    this.resetGame();
+};
+
+//Reset the game in the event of game over
+Game.prototype.resetGame = function() {
+    collectedGems = [];
+    collectedHearts = [];
+    //reset the html for lives,hearts, gems
+    document.getElementById("lives").innerHTML = 3;
+    document.getElementById("gems").innerHTML = collectedGems.length.toString();
+    //
+    player.reset();
+    var allGemsLength = allGems.length;
+    for (i=0; i < allGemsLength; i++) {
+        allGems[i].reset();
+    }
+    var allEnemiesLength = allEnemies.length;
+    for (i=0; i < allEnemiesLength; i++) {
+        allEnemies[i].reset();
+    }
+    var allRocksLength = allRocks.length;
+    for (i=0; i < allRocksLength; i++) {
+        allRocks[i].reset();
+    }
+    var allHeartsLength = allHearts.length;
+    for (i=0; i < allHeartsLength; i++) {
+        allHearts[i].reset();
+    }
+};
+
+var game = new Game;
 
 
 
 //***********   SUPER CLASS   ********************//
 //************** ENTITIES IN THE GAME ********************//
 //***********(Not Include the Player)******************//
-        //entity this will be handy when include rocks,gem,starts, etc!
+  //entity this will be handy when include rocks,gem,starts, etc!
 var Entity = function (x,y) {
     this.x = x;
     this.y = y;
@@ -38,6 +78,7 @@ var Rock = function(x,y, originalPosition, width, height) {
 }
 Rock.prototype = Object.create(Entity.prototype);
 
+
 var allRocks = [];
 //the obstacles
 var rock1 = new Rock (608,498);
@@ -51,7 +92,7 @@ var rock8 = new Rock (107,-5);
 var rock9 = new Rock (511,-5);
 allRocks.push(rock1,rock2,rock3,rock4,rock5,rock6,rock7,rock8,rock9);
 
-var collectedRocks = []; // (x,y) of the hearts collected
+// var collectedRocks = []; // (x,y) of the hea collected
 
 //*****************   SUB-CLASS   *****************//
 //****************** Hearts: lives******************//
@@ -59,6 +100,7 @@ var Heart = function(x,y, originalPosition, width, height) {
   Entity.call (this, x, y, originalPosition, width, height);
   this.sprite = 'images/Heart1.png';
 }
+
 Heart.prototype = Object.create(Entity.prototype);
 
 var allHearts = [];
@@ -160,22 +202,36 @@ var Player = function(x,y) {
   this.playerPosition = []; // [ [x,y], [x,y], [x,y], etc... ]
   this.width = 60;
   this.height = 70;
-  // this.lives = 5; //how to add on html bar, etc
+  this.lives = 3; //how to add on html bar, etc
   this.sprite = 'images/char-boy.png';
 };
 
 Player.prototype.reset = function() {
-  this.x = 300;
-  this.y = 575;
-  // this.lives = 5;
+  this.x = Player_start_x;
+  this.y = Player_start_y;
+  this.lives = 3;
   this.sprite = 'images/char-boy.png';
 }
 
 // ----when the player collides with enemy -----
-// Player.prototype.collision = function() {
-//     //scenario 1: game reset.(lives=0, TODO:lives,game function: lose,reset)
-//     this.reset();
-// }
+Player.prototype.collision = function() {
+    //Game Over....
+    if (this.lives === 1) {
+      this.lives -= 1;
+      document.getElementById("lives").innerHTML = this.lives.toString();
+      //Delay the Game Over alert or it pops up too fast for doc to update lives status to 0
+      setTimeout(function() {
+      game.lose();
+      }, 50);
+    }
+      //Scenario 2: Player still has lives left
+    else if (this.lives > 1) {
+      this.lives -= 1;
+      document.getElementById("lives").innerHTML = this.lives.toString();
+      this.x = Player_start_x;
+      this.y = Player_start_y;
+    }
+};
 
 Player.prototype.render = function() {
     ctx.drawImage (Resources.get(this.sprite), this.x, this.y);
@@ -194,13 +250,9 @@ Player.prototype.update = function(dt) {
   if (this.y > Player_start_y) {
       this.y = Player_start_y; //don't allow down movement. mu haha.
   }
-  if (this.y < -12) { //-(10+70) < 83, player fits snuggly inside row
-      this.y = -10; //  70 = player height, 83 = row size.
-  }
-  if (this.y === -6) { //# based on trial and error.
-    setTimeout(function() {
-      player.reset(); //player reaches h20..resets game after 1s.
-    }, 1000);
+  if (this.y <= -7) { //-(10+70) < 83, player fits snuggly inside row
+      this.y === -6; //  70 = player height, 83 = row size.
+      game.win();
   }
 
   // Collide with ENEMY BUGS
@@ -209,8 +261,8 @@ Player.prototype.update = function(dt) {
         this.x + this.width > allEnemies[i].x &&
         this.y < allEnemies[i].y + allEnemies[i].height &&
         this.y + this.height > allEnemies[i].y) {
-            this.reset(); //game over scenario...more to add later.
-        }
+          this.collision();
+      }
   }
   //Hit the rocks. can't move past them
   for (i=0; i < allRocks.length; i++) {
@@ -222,16 +274,16 @@ Player.prototype.update = function(dt) {
             this.y = this.playerPosition[this.playerPosition.length-1][1];
           }
   }
-  //collect hearts....todo: gain lives. 
+  //collect hearts....todo: gain lives.
   for (i=0; i < allHearts.length; i++) {
     if (this.x < allHearts[i].x + allHearts[i].width &&
         this.x + this.width > allHearts[i].x &&
         this.y < allHearts[i].y + allHearts[i].height &&
         this.y + this.height > allHearts[i].y) {
           collectedHearts.push([allHearts[i].x,allHearts[i].y]);
-          //TODO: add -->>> this.lives += 1;
-          //TODO: add html..psuedo-code -->> "Live(s): " + this.lives;
-          //move the heart off the canvas. disappear
+          this.lives += 1;
+          document.getElementById("lives").innerHTML = this.lives.toString();
+          //move heart img off canvas
           allHearts[i].x = 1000;
           allHearts[i].y = 1000;
         }
@@ -243,8 +295,8 @@ Player.prototype.update = function(dt) {
         this.y < allGems[i].y + allGems[i].height &&
         this.y + this.height > allGems[i].y) {
           collectedGems.push([allGems[i].x, allGems[i].y]);
-          //TODO: add html..psuedo-code -->> "Gems Collected: " + collectedGems.length;
-          //move the gem off the canvas. disappear
+          document.getElementById('gems').innerHTML = collectedGems.length.toString();
+          //move the gem off canvas. disappear
           allGems[i].x = 1000;
           allGems[i].y = 1000;
         }

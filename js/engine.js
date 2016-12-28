@@ -137,8 +137,9 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                   ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
+
         }
 
         renderEntities();
@@ -157,6 +158,7 @@ var Engine = (function(global) {
         });
         allRocks.forEach(function(rock) {
             rock.render();
+            // Rock.swim();
         });
         allHearts.forEach(function(heart) {
             heart.render();
@@ -164,6 +166,8 @@ var Engine = (function(global) {
         allGems.forEach(function(gem) {
             gem.render();
         });
+
+
 
         player.render();
     }
@@ -174,7 +178,7 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
-        // player.reset();
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -190,7 +194,7 @@ var Engine = (function(global) {
         'images/enemy-bug-r.png',
         'images/Gem-Blue1.png',
         'images/Heart1.png',
-        'images/Rock1.png'
+        'images/Rock1.png',
     ]);
     Resources.onReady(init);
 

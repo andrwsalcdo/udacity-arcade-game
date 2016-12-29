@@ -153,9 +153,6 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
         allRocks.forEach(function(rock) {
             rock.render();
             // Rock.swim();
@@ -165,6 +162,9 @@ var Engine = (function(global) {
         });
         allGems.forEach(function(gem) {
             gem.render();
+        });
+        allEnemies.forEach(function(enemy) {
+          enemy.render();
         });
 
 
@@ -178,7 +178,7 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
-
+        // startScreen(); 
     }
 
     /* Go ahead and load all of the images we know we're going to need to

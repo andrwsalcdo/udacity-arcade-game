@@ -90,7 +90,8 @@ var rock6 = new Rock (713,244);
 var rock7 = new Rock (104,162);
 var rock8 = new Rock (107,-5);
 var rock9 = new Rock (511,-5);
-allRocks.push(rock1,rock2,rock3,rock4,rock5,rock6,rock7,rock8,rock9);
+var rock10 = new Rock (711,-5);
+allRocks.push(rock1,rock2,rock3,rock4,rock5,rock6,rock7,rock8,rock9,rock10);
 
 // var collectedRocks = []; // (x,y) of the hea collected
 

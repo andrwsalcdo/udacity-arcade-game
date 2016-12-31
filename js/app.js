@@ -3,8 +3,18 @@ var Canvas_width = 808;
 var Canvas_height = 808;
 var Player_start_x = 300;
 var Player_start_y = 575;
+//var win = false; //Whether level has been won; used to trigger animations.
+var play = false; //Whether the game has begun; used to trigger character selector screen
+var selectedChar; //Used as pointer for the selected sprite URL in array
+var chars = [ //Array of URLs for player and NPC sprites
+    'images/char-boy.png',
+    'images/char-cat-girl.png',
+    'images/char-horn-girl.png',
+    'images/char-pink-girl.png',
+    'images/char-princess-girl.png'
+];
 
-//***********   GAME FUNCTIONS  ********************//
+//***********   GAME Class  ********************//
 //************** START, RESET, WIN ********************//
 var Game = function() {};
 
@@ -14,7 +24,7 @@ Game.prototype.win = function() {
 };
 
 Game.prototype.lose = function() {
-    alert ("GAME OVER!");
+    alert ("GAME OVER!"); //Instantiates our selector;
     this.resetGame();
 };
 
@@ -47,6 +57,61 @@ Game.prototype.resetGame = function() {
 
 var game = new Game;
 
+// ---------- Selector Class ---------- \\
+
+/* Selector used for character selection
+ * col Selector column
+ * realx Vertical coordinate at which to draw selector
+ * y Vertical coordinate
+ * alpha Transparency value for the sprite
+ * throbdir Direction of visual throb:  transparent & opaque
+ */
+var Selector = function() {
+    this.col = 0;
+    this.x = this.col * 101 + 152;
+    this.y = 608;
+    this.sprite = 'images/Selector.png';
+    this.alpha = 1;
+    this.throbdir = 'transparent';
+};
+
+// Receives input from user to move selector
+Selector.prototype.handleInput = function(key) {
+    if (key == 'left') {
+        this.col > 0 ? (this.col--, this.x = this.col * 101 + 152) : this.col;
+    }
+    if (key == 'right') {
+      this.col < 4 ? (this.col++, this.x = this.col * 101 + 152) : this.col;
+    }
+    if (key == 'enter') {
+      selectedChar = this.col;
+      play = true;
+      game.resetGame();
+    }
+};
+
+// Selector render function
+Selector.prototype.render = function() {
+    ctx.save();
+    this.throb();
+    ctx.globalAlpha = this.alpha;
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.restore();
+};
+
+// Helper for Selector.render that uses alpha transparency to "throb" the selector
+Selector.prototype.throb = function() {
+    if (this.alpha > 0.5 && this.throbdir === 'transparent') {//'down') {
+        this.alpha -= 0.0075;
+    }
+    else {
+        this.throbdir = 'opaque';//'up';
+        this.alpha += 0.0075;
+        if (this.alpha > 1 && this.throbdir === 'opaque') { //'up') {
+            this.throbdir = 'transparent';//'down';
+        }
+    }
+}
 
 
 //***********   SUPER CLASS   ********************//
@@ -204,14 +269,14 @@ var Player = function(x,y) {
   this.width = 60;
   this.height = 70;
   this.lives = 3; //how to add on html bar, etc
-  this.sprite = 'images/char-boy.png';
+  this.sprite = chars[selectedChar]; //'images/char-boy.png';
 };
 
 Player.prototype.reset = function() {
   this.x = Player_start_x;
   this.y = Player_start_y;
   this.lives = 3;
-  this.sprite = 'images/char-boy.png';
+  this.sprite = chars[selectedChar]; //'images/char-boy.png';
 }
 
 // ----when the player collides with enemy -----
@@ -331,15 +396,24 @@ Player.prototype.handleInput = function(movement) {
 // instantiate the player by Placing the player obj in a var called player
 var player = new Player (Player_start_x,Player_start_y);
 
+// Instantiates our selector; called in Engine.js before init()
+function initLoad() {
+     selector = new Selector();
+}
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
+        13: 'enter',
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
-
-    player.handleInput(allowedKeys[e.keyCode]);
+    if (play === false) {
+        selector.handleInput(allowedKeys[e.keyCode]);
+    }
+    else {
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
 });

@@ -39,8 +39,10 @@ var Engine = (function(global) {
          * would be the same for everyone (regardless of how fast their
          * computer is) - hurray time!
          */
+
+
         var now = Date.now(),
-            dt = (now - lastTime) / 1000.0;
+        dt = (now - lastTime) / 1000.0;
 
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
@@ -56,8 +58,11 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
+
         win.requestAnimationFrame(main);
     }
+
+
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -65,6 +70,7 @@ var Engine = (function(global) {
      */
     function init() {
         reset();
+        initLoad();
         lastTime = Date.now();
         main();
     }
@@ -92,12 +98,13 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+      if (play === true) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-
         player.update();
         // player.reset();
+      }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -110,6 +117,8 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
+      if (play == true) {
+
         var rowImages = [
                 'images/water-block.png',   // Top row is water
                 'images/grass-block.png',   // Row 1 of 6 is grass
@@ -141,8 +150,11 @@ var Engine = (function(global) {
             }
 
         }
-
         renderEntities();
+      }
+      else {
+        startScreen();
+      }
     }
 
     /* This function is called by the render function and is called on each game
@@ -166,11 +178,37 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
           enemy.render();
         });
-
-
-
         player.render();
+      }
+
+
+
+
+    /* This function draws starting screen. User can choose a hero.
+     *TODO: add instructions, game info, etc */
+     // Renders our load screen
+    function startScreen() {
+      //initial canvas..maybe delete color later 
+      ctx.fillStyle = "blue";
+      ctx.rect(0,0,canvas.width,canvas.height );
+      ctx.fill();
+      //character section
+      ctx.font = "bold 20pt Verdana";
+      ctx.fillStyle = "yellow";
+      ctx.textAlign = 'center';
+      ctx.fillText("Choose your hero", (canvas.width*0.5), 650);
+        function loadRender() {
+                for (col = 0; col <5; col++) {
+                ctx.drawImage(Resources.get("images/stone-block.png"), col * 101 + 152, 650); //249
+              }
+            selector.render();
+            for (var i = 0; i < chars.length; i++) {
+              ctx.drawImage(Resources.get(chars[i]), i * 101 + 152, 616); //215 34 diff.
+            }
+        }
+        loadRender(); //invoke the loadRender function. call it. make it work.
     }
+
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
@@ -178,7 +216,7 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
-        // startScreen(); 
+        // startScreen();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -191,10 +229,15 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
         'images/enemy-bug-r.png',
         'images/Gem-Blue1.png',
         'images/Heart1.png',
         'images/Rock1.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 

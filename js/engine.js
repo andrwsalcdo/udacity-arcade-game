@@ -188,10 +188,50 @@ var Engine = (function(global) {
      *TODO: add instructions, game info, etc */
      // Renders our load screen
     function startScreen() {
-      //initial canvas..maybe delete color later 
+      //initial canvas..maybe delete color later
       ctx.fillStyle = "blue";
       ctx.rect(0,0,canvas.width,canvas.height );
       ctx.fill();
+      //I want to use HTML5 canvas, because we learned that for the project. I realize that this could be solved with a simple image made in gimp/photoshop, or manipulating the DOM w/ jQuery, or plain html w/ vanilla JS...right? does that sound remotely correct?  :D
+      //Game Description.----****see comment above***
+      ctx.font = 'bold 20pt Verdana';
+      ctx.fillStyle = 'silver';
+      ctx.strokeStyle = 'black';
+      ctx.textAlign = 'left';
+      var gameDescription = "Reach the water before you get eaten alive by bugs!";
+      var gameDescription2 ="Collect Gems for fun and Hearts for extra lives";
+      var gameDescription3 = "...Good Luck!";
+      ctx.fillText(gameDescription, 10, 30);
+      ctx.fillText(gameDescription2, 10, 70);
+      ctx.textAlign = 'center';
+      ctx.fillText(gameDescription3, 380, 110);
+      //Controls....
+      ctx.font = 'bold 20pt Verdana';
+      ctx.fillStyle = 'silver';
+      ctx.strokeStyle = 'black';
+      ctx.textAlign = 'left';
+      var control = "Move your Player";
+      ctx.fillText(control, 50, 204);
+      ctx.drawImage(Resources.get("images/aUp.png"), 129, 220);
+      ctx.drawImage(Resources.get("images/aLeft.png"), 57, 295);
+      ctx.drawImage(Resources.get("images/aDown.png"), 132, 295);
+      ctx.drawImage(Resources.get("images/aRight.png"), 205, 295);
+
+      var control2 = "Press Enter to Start Game";
+      ctx.fillText(control2, 400, 204);
+      ctx.drawImage(Resources.get("images/enter.png"), 532, 244);
+      // difficulty TODO: add difficulty code for mouse events.
+      ctx.drawImage(Resources.get("images/green_button02.png"), 52, 444);
+      ctx.drawImage(Resources.get("images/yellow_button02.png"), 292, 444);
+      ctx.drawImage(Resources.get("images/red_button01.png"), 532, 444);
+      ctx.font = "bold 18pt Verdana";
+      ctx.fillStyle = "white";
+      ctx.textAlign = 'left';
+      ctx.fillText("Easy", 112, 477);
+      ctx.fillText("Medium", 332, 477);
+      ctx.fillText("Hard", 592, 477);
+
+
       //character section
       ctx.font = "bold 20pt Verdana";
       ctx.fillStyle = "yellow";
@@ -237,7 +277,15 @@ var Engine = (function(global) {
         'images/Gem-Blue1.png',
         'images/Heart1.png',
         'images/Rock1.png',
-        'images/Selector.png'
+        'images/Selector.png',
+        'images/aLeft.png',
+        'images/aDown.png',
+        'images/aRight.png',
+        'images/aUp.png',
+        'images/enter.png',
+        'images/green_button02.png',
+        'images/yellow_button02.png',
+        'images/red_button01.png'
     ]);
     Resources.onReady(init);
 

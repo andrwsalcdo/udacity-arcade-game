@@ -5,6 +5,7 @@ var Player_start_x = 300;
 var Player_start_y = 575;
 //var win = false; //Whether level has been won; used to trigger animations.
 var play = false; //Whether the game has begun; used to trigger character selector screen
+var Difficulty = 1 //default value is 'median'
 var selectedChar; //Used as pointer for the selected sprite URL in array
 var chars = [ //Array of URLs for player and NPC sprites
     'images/char-boy.png',
@@ -13,6 +14,30 @@ var chars = [ //Array of URLs for player and NPC sprites
     'images/char-pink-girl.png',
     'images/char-princess-girl.png'
 ];
+// how to make refactor this to make it cleaner, I feel like all these buttons could be manipulated in one function or a superclass or something.
+var easyButton = document.getElementById('easy');
+var mediumButton = document.getElementById('medium');
+var hardButton = document.getElementById('hard');
+
+/* Initialize the difficulty to the player's choosen, if clicked */
+easyButton.addEventListener('click', function () {
+    Difficulty === 0;
+    easyButton.className = 'easy active';
+    mediumButton.className = 'medium';
+    hardButton.className = 'hard';
+}, false);
+mediumButton.addEventListener('click', function () {
+    Difficulty === 1;
+    easyButton.className = 'easy';
+    mediumButton.className = 'medium active';
+    hardButton.className = 'hard';
+}, false);
+hardButton.addEventListener('click', function () {
+    Difficulty === 2;
+    easyButton.className = 'easy';
+    mediumButton.className = 'medium';
+    hardButton.className = 'hard active';
+}, false);
 
 //***********   GAME Class  ********************//
 //************** START, RESET, WIN ********************//
@@ -193,13 +218,29 @@ allGems.push(gem1,gem2,gem3);
 var collectedGems = []; // (x,y) of gems obtained
 
 //***********   SUB CLASS   ********************//
-//************** Enemy moving LEFT-right  ********************//
+//************** Enemy moving LEFT-right   (faster) ********************//
 var EnemyL = function(x,y, originalPosition, width, height) {
   Entity.call (this, x, y, originalPosition);
   this.width = 70;
   this.height = 60;
-  this.speed = Math.floor(Math.random() * 400) + 150;
   this.sprite = 'images/enemy-bug.png';
+  // this.speed = Math.floor(Math.random() * 400) + 150;
+  switch (Difficulty) {
+    case 1:
+        this.speed =  Math.floor(Math.random() * (200-1)) + 1;
+        break;
+
+    case 2:
+        this.speed = Math.floor(Math.random() * (2-1)) + 1;
+        break;
+
+    case 3:
+        this.speed = Math.floor(Math.random() * (1000-1)) + 1;
+        break;
+    default:
+      this.speed = Math.floor(Math.random() * (2-1)) + 1;
+      break;
+  }
 };
 
 EnemyL.prototype = Object.create(Entity.prototype);
@@ -223,13 +264,30 @@ var enemy3 = new EnemyL (0,235);
 allEnemies.push(enemy0,enemy1,enemy2,enemy3);
 
 //***********   SUB CLASS   ********************//
-//************** Enemy moving RIGHT-left  ********************//
+//************** Enemy moving RIGHT-left  (slower)********************//
 var EnemyR = function(x,y, originalPosition, width, height) {
   Entity.call (this, x, y, originalPosition);
   this.width = 85; //70
   this.height = 65; //60
-  this.speed = Math.floor(Math.random() * 200) + 100;
   this.sprite = 'images/enemy-bug-r.png';
+  // this.speed = Math.floor(Math.random() * 200) + 100;
+  switch (Difficulty) {
+    case 1:
+        this.speed =  Math.floor(Math.random() * (200-1)) + 1;
+        break;
+
+    case 2:
+        this.speed = Math.floor(Math.random() * (400-1)) + 1;
+        break;
+
+    case 3:
+        this.speed = Math.floor(Math.random() * (600-1)) + 1;
+        break;
+
+    default:
+        this.speed = Math.floor(Math.random() * 200) + 100;
+        break;
+}
 };
 
 EnemyR.prototype = Object.create(Entity.prototype);

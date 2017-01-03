@@ -21,9 +21,46 @@ body {
     width: 20%;
 }
 
-/*.level {
-    float: right;
-    text-align: right;
-    width: 25%;
-    letter-spacing: -5px;
-}*/
+canvas {
+  position: relative;
+  /*height: 100%;
+  width: 100%;*/
+}
+
+button {
+  position: absolute;
+  color: white;
+  font: 18pt verdana;
+  text-align: center;
+  z-index: 5;
+  box-shadow: 5px 5px 5px black;
+  width: 175px;
+  height: 45px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.easy{
+  top: 594px;
+  left: 342px;
+  background: #285c1c;
+}
+.easy.active {
+  background: #57c63f;
+}
+.medium {
+  top: 594px;
+  left: 582px;
+  background: #856e32;
+}
+.medium.active {
+  background: #ffcf0c; //#f6cd5c
+}
+.hard {
+  top: 594px;
+  left: 822px;
+  background: #6b1e1e;
+}
+.hard.active {
+  background: #cd4d32; //#d73e3e
+}

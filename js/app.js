@@ -52,7 +52,7 @@ var Game = function() {
 };
 
 Game.prototype.win = function() {
-    alert ("CONGRATS! YOU WIN!"); ////**To play again: Refresh the page**
+    alert ("CONGRATS! YOU WIN!"); //**To play again: Refresh the page**
     this.resetGame();
 };
 
@@ -389,12 +389,17 @@ Player.prototype.update = function(dt) {
   if (this.y > Player_start_y) {
       this.y = Player_start_y; //don't allow down movement. mu haha.
   }
-  if (this.y <= -7) { //-(10+70) < 83, player fits snuggly inside row
-      this.y === -6; //  70 = player height, 83 = row size.
-      game.win();
+  if (this.y < -6) { //top boundary
+      this.y = -6;
+  }
+  //collect the gems and make it to the water. you win the game!
+  if (this.y <= -6  && collectedGems.length > 2) {
+    this.y = -6;
+    game.win();
   }
 
-  // Collide with ENEMY BUGS
+
+  //Collide with ENEMY BUGS
   for (i=0; i < allEnemies.length; i++) {
     if (this.x < allEnemies[i].x + allEnemies[i].width &&
         this.x + this.width > allEnemies[i].x &&

@@ -206,13 +206,13 @@ var Engine = (function(global) {
       //how to import google font into the canvas? I tried to make the canvas font like the HTML font, but no dice. I tried Stack Overflow, and answers from 2010, 2011,2013 wouldn't work...any advice? because Verdana is boring :D
 
       //*********Game Description.----****see comment above***
-      var gameDescription = "Reach the water before you get eaten alive by bugs!";
-      var gameDescription2 ="Collect Gems for fun and Hearts for extra lives";
+      var gameDescription = "Collect all Gems and reach the Water to win!";
+      var gameDescription2 ="Avoid the Bugs! Collect Hearts to gain lives";
       var gameDescription3 = "...Good Luck!";
-      ctx.font = 'bold 18pt Verdana';
+      ctx.font = 'bold 20pt Verdana';
       ctx.textAlign = 'center';
 
-      ctx.fillStyle = 'black';
+      ctx.fillStyle = '#556B2F';
       ctx.fillText(gameDescription, canvas.width/2, 78);
       ctx.fillText(gameDescription2, canvas.width/2, 110);
       ctx.fillText(gameDescription3, canvas.width/2, 145);
@@ -225,10 +225,10 @@ var Engine = (function(global) {
 
       //*********Controls....**********
       var control = "Move your Player";
-      ctx.font = 'bold 18pt Verdana';
+      ctx.font = 'bold 20pt Verdana';
       ctx.textAlign = 'center';
 
-      ctx.fillStyle = 'black';
+      ctx.fillStyle = '#556B2F';
       ctx.fillText(control, canvas.width/2, 204);
 
       ctx.strokeStyle = '#cccccc';
@@ -241,10 +241,10 @@ var Engine = (function(global) {
       ctx.drawImage(Resources.get("images/aRight.png"), 440, 295);
 
       // ******difficulty TODO: add difficulty code for mouse events.******
-      ctx.font = "bold 16pt Verdana";
+      ctx.font = "bold 20pt Verdana";
       ctx.textAlign = 'center';
 
-      ctx.fillStyle = "black";
+      ctx.fillStyle = "#556B2F";
       ctx.fillText("Choose your Difficulty", canvas.width/2, 417);
 
       ctx.strokeStyle = '#cccccc';
@@ -252,10 +252,10 @@ var Engine = (function(global) {
       ctx.strokeText("Choose your Difficulty", canvas.width/2, 417);
 
       //********character section********
-      ctx.font = "bold 16pt Verdana";
+      ctx.font = "bold 20pt Verdana";
       ctx.textAlign = 'center';
 
-      ctx.fillStyle = "black";
+      ctx.fillStyle = "#556B2F";
       ctx.fillText("Choose your Player. Press Enter to Start Game", (canvas.width*0.5), 540);
 
       ctx.strokeStyle = '#cccccc';

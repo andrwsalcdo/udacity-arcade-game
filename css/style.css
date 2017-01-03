@@ -1,6 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Press+Start+2P);
+
 body {
     text-align: center;
+    font-family: 'Press Start 2P', sans-serif;
+    background-image: url("../images/background-11.png");
+    background-repeat: round;
 }
+
 /* Menu */
 .menu {
     width: 808px;
@@ -14,6 +20,7 @@ body {
 .lives,
 .gems {
     vertical-align: top;
+    font-family: 'Press Start 2P', sans-serif;
 }
 
 .items {
@@ -41,7 +48,7 @@ button {
 }
 
 .easy{
-  top: 594px;
+  top: 514px;
   left: 342px;
   background: #285c1c;
 }
@@ -49,7 +56,7 @@ button {
   background: #57c63f;
 }
 .medium {
-  top: 594px;
+  top: 514px;
   left: 582px;
   background: #856e32;
 }
@@ -57,7 +64,7 @@ button {
   background: #ffcf0c; //#f6cd5c
 }
 .hard {
-  top: 594px;
+  top: 514px;
   left: 822px;
   background: #6b1e1e;
 }

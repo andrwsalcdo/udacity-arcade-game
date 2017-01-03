@@ -5,7 +5,7 @@ var Player_start_x = 300;
 var Player_start_y = 575;
 //var win = false; //Whether level has been won; used to trigger animations.
 var play = false; //Whether the game has begun; used to trigger character selector screen
-var Difficulty = 1 //default value is 'median'
+var difficulty = 0;
 var selectedChar; //Used as pointer for the selected sprite URL in array
 var chars = [ //Array of URLs for player and NPC sprites
     'images/char-boy.png',
@@ -19,21 +19,24 @@ var easyButton = document.getElementById('easy');
 var mediumButton = document.getElementById('medium');
 var hardButton = document.getElementById('hard');
 
-/* Initialize the difficulty to the player's choosen, if clicked */
+/* Initialize the difficulty to the player's choice, if clicked */
 easyButton.addEventListener('click', function () {
-    Difficulty === 0;
+    difficulty = 1;
+    // EnemyL.speed = Math.floor(Math.random() * (200-1)) + 1;
     easyButton.className = 'easy active';
     mediumButton.className = 'medium';
     hardButton.className = 'hard';
 }, false);
 mediumButton.addEventListener('click', function () {
-    Difficulty === 1;
+    difficulty = 2;
+    // EnemyL.speed = Math.floor(Math.random() * (2-1)) + 1;
     easyButton.className = 'easy';
     mediumButton.className = 'medium active';
     hardButton.className = 'hard';
 }, false);
 hardButton.addEventListener('click', function () {
-    Difficulty === 2;
+    difficulty = 3;
+    // EnemyL.speed = Math.floor(Math.random() * (50-1)) + 1;
     easyButton.className = 'easy';
     mediumButton.className = 'medium';
     hardButton.className = 'hard active';
@@ -41,7 +44,12 @@ hardButton.addEventListener('click', function () {
 
 //***********   GAME Class  ********************//
 //************** START, RESET, WIN ********************//
-var Game = function() {};
+var Game = function() {
+  //Preload audio sample(s)
+  this.gainLifeEfx = new Audio('audio/gainLife.wav');
+  this.getGemEfx = new Audio('audio/getGem.wav');
+  this.loseLifeEfx = new Audio('audio/loseLife.wav');
+};
 
 Game.prototype.win = function() {
     alert ("CONGRATS! YOU WIN!"); ////**To play again: Refresh the page**
@@ -94,7 +102,7 @@ var game = new Game;
 var Selector = function() {
     this.col = 0;
     this.x = this.col * 101 + 152;
-    this.y = 608;
+    this.y = 498;
     this.sprite = 'images/Selector.png';
     this.alpha = 1;
     this.throbdir = 'transparent';
@@ -224,23 +232,30 @@ var EnemyL = function(x,y, originalPosition, width, height) {
   this.width = 70;
   this.height = 60;
   this.sprite = 'images/enemy-bug.png';
-  // this.speed = Math.floor(Math.random() * 400) + 150;
-  switch (Difficulty) {
-    case 1:
-        this.speed =  Math.floor(Math.random() * (200-1)) + 1;
-        break;
-
-    case 2:
-        this.speed = Math.floor(Math.random() * (2-1)) + 1;
-        break;
-
-    case 3:
-        this.speed = Math.floor(Math.random() * (1000-1)) + 1;
-        break;
-    default:
-      this.speed = Math.floor(Math.random() * (2-1)) + 1;
-      break;
+  // this.speed = Math.floor(Math.random() * 400) + 150;\
+  if (difficulty = 1) {
+    this.speed =  Math.floor(Math.random() * (200-1)) + 1;
+  } else if (difficulty = 2) {
+     this.speed = Math.floor(Math.random() * (2-1)) + 1;
+  } else {
+     this.speed = Math.floor(Math.random() * (1000-1)) + 1;
   }
+  // switch (Difficulty) {
+  //   case 1:
+  //       this.speed =  Math.floor(Math.random() * (200-1)) + 1;
+  //       break;
+  //
+  //   case 2:
+  //       this.speed = Math.floor(Math.random() * (2-1)) + 1;
+  //       break;
+  //
+  //   case 3:
+  //       this.speed = Math.floor(Math.random() * (1000-1)) + 1;
+  //       break;
+  //   default:
+  //     this.speed = Math.floor(Math.random() * (200-1)) + 1;
+  //     break;
+  // }
 };
 
 EnemyL.prototype = Object.create(Entity.prototype);
@@ -270,24 +285,24 @@ var EnemyR = function(x,y, originalPosition, width, height) {
   this.width = 85; //70
   this.height = 65; //60
   this.sprite = 'images/enemy-bug-r.png';
-  // this.speed = Math.floor(Math.random() * 200) + 100;
-  switch (Difficulty) {
-    case 1:
-        this.speed =  Math.floor(Math.random() * (200-1)) + 1;
-        break;
-
-    case 2:
-        this.speed = Math.floor(Math.random() * (400-1)) + 1;
-        break;
-
-    case 3:
-        this.speed = Math.floor(Math.random() * (600-1)) + 1;
-        break;
-
-    default:
-        this.speed = Math.floor(Math.random() * 200) + 100;
-        break;
-}
+  this.speed = Math.floor(Math.random() * 200) + 100;
+//   switch (Difficulty) {
+//     case 1:
+//         this.speed =  Math.floor(Math.random() * (200-1)) + 1;
+//         break;
+//
+//     case 2:
+//         this.speed = Math.floor(Math.random() * (400-1)) + 1;
+//         break;
+//
+//     case 3:
+//         this.speed = Math.floor(Math.random() * (600-1)) + 1;
+//         break;
+//
+//     default:
+//         this.speed = Math.floor(Math.random() * 200) + 100;
+//         break;
+// }
 };
 
 EnemyR.prototype = Object.create(Entity.prototype);
@@ -385,6 +400,7 @@ Player.prototype.update = function(dt) {
         this.x + this.width > allEnemies[i].x &&
         this.y < allEnemies[i].y + allEnemies[i].height &&
         this.y + this.height > allEnemies[i].y) {
+          game.loseLifeEfx.play();
           this.collision();
       }
   }
@@ -405,6 +421,7 @@ Player.prototype.update = function(dt) {
         this.y < allHearts[i].y + allHearts[i].height &&
         this.y + this.height > allHearts[i].y) {
           collectedHearts.push([allHearts[i].x,allHearts[i].y]);
+          game.gainLifeEfx.play();
           this.lives += 1;
           document.getElementById("lives").innerHTML = this.lives.toString();
           //move heart img off canvas
@@ -419,6 +436,7 @@ Player.prototype.update = function(dt) {
         this.y < allGems[i].y + allGems[i].height &&
         this.y + this.height > allGems[i].y) {
           collectedGems.push([allGems[i].x, allGems[i].y]);
+          game.getGemEfx.play();
           document.getElementById('gems').innerHTML = collectedGems.length.toString();
           //move the gem off canvas. disappear
           allGems[i].x = 1000;

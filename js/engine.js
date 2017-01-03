@@ -194,55 +194,81 @@ var Engine = (function(global) {
     function startScreen() {
       //*****get rid of game html menu items--hearts & lives.*****
       document.getElementById('menu').hidden = true;
-      //******nitial canvas..maybe delete color later****
-      ctx.fillStyle = "blue";
-      ctx.rect(0,0,canvas.width,canvas.height);
-      ctx.fill();
+      //******initial canvas..resuing the CSS background image****
+      ctx.drawImage(Resources.get('images/background-11.png'), canvas.width, 680);
+    //  ctx.fillStyle = "#b9defc";
+    //  ctx.rect(0,60,canvas.width, 652);
+    //  ctx.fill();
+
       //I want to use HTML5 canvas, because we learned that for the project. I realize that this could be solved with a simple image made in gimp/photoshop, or manipulating the DOM w/ jQuery, or plain html w/ vanilla JS...right? does that sound remotely correct?  :D
+      //maybe using those methods would be easier for creating a Start Menu, but again, I thought it ideal to use HTML canvas for the menu, since we learned it during the lessons.
+
+      //how to import google font into the canvas? I tried to make the canvas font like the HTML font, but no dice. I tried Stack Overflow, and answers from 2010, 2011,2013 wouldn't work...any advice? because Verdana is boring :D
 
       //*********Game Description.----****see comment above***
-      ctx.font = 'bold 20pt Verdana';
-      ctx.fillStyle = 'silver';
-      ctx.strokeStyle = 'black';
-      ctx.textAlign = 'center';
       var gameDescription = "Reach the water before you get eaten alive by bugs!";
       var gameDescription2 ="Collect Gems for fun and Hearts for extra lives";
       var gameDescription3 = "...Good Luck!";
-      ctx.fillText(gameDescription, canvas.width/2, 30);
-      ctx.fillText(gameDescription2, canvas.width/2, 70);
-      ctx.fillText(gameDescription3, canvas.width/2, 110);
+      ctx.font = 'bold 18pt Verdana';
+      ctx.textAlign = 'center';
+
+      ctx.fillStyle = 'black';
+      ctx.fillText(gameDescription, canvas.width/2, 78);
+      ctx.fillText(gameDescription2, canvas.width/2, 110);
+      ctx.fillText(gameDescription3, canvas.width/2, 145);
+
+      ctx.strokeStyle = '#cccccc';
+      ctx.lineWidth = 1;
+      ctx.strokeText(gameDescription, canvas.width/2, 78);
+      ctx.strokeText(gameDescription2, canvas.width/2, 110);
+      ctx.strokeText(gameDescription3, canvas.width/2, 145);
 
       //*********Controls....**********
-      ctx.font = 'bold 20pt Verdana';
-      ctx.fillStyle = 'silver';
-      ctx.strokeStyle = 'black';
-      ctx.textAlign = 'center';
       var control = "Move your Player";
+      ctx.font = 'bold 18pt Verdana';
+      ctx.textAlign = 'center';
+
+      ctx.fillStyle = 'black';
       ctx.fillText(control, canvas.width/2, 204);
+
+      ctx.strokeStyle = '#cccccc';
+      ctx.lineWidth = 1;
+      ctx.strokeText(control, canvas.width/2, 204);
+
       ctx.drawImage(Resources.get("images/aUp.png"), 364, 220);
       ctx.drawImage(Resources.get("images/aLeft.png"), 292, 295);
       ctx.drawImage(Resources.get("images/aDown.png"), 369, 295);
       ctx.drawImage(Resources.get("images/aRight.png"), 440, 295);
 
       // ******difficulty TODO: add difficulty code for mouse events.******
-      ctx.font = "bold 20pt Verdana";
-      ctx.fillStyle = "silver";
+      ctx.font = "bold 16pt Verdana";
       ctx.textAlign = 'center';
-      ctx.fillText("Choose your Difficulty", canvas.width/2, 477);
 
+      ctx.fillStyle = "black";
+      ctx.fillText("Choose your Difficulty", canvas.width/2, 417);
+
+      ctx.strokeStyle = '#cccccc';
+      ctx.lineWidth = 1;
+      ctx.strokeText("Choose your Difficulty", canvas.width/2, 417);
 
       //********character section********
-      ctx.font = "bold 20pt Verdana";
-      ctx.fillStyle = "silver";
+      ctx.font = "bold 16pt Verdana";
       ctx.textAlign = 'center';
-      ctx.fillText("Choose your Player. Press Enter to Start Game", (canvas.width*0.5), 650);
+
+      ctx.fillStyle = "black";
+      ctx.fillText("Choose your Player. Press Enter to Start Game", (canvas.width*0.5), 540);
+
+      ctx.strokeStyle = '#cccccc';
+      ctx.lineWidth = 1;
+      ctx.strokeText("Choose your Player. Press Enter to Start Game", (canvas.width*0.5), 540);
+
         function loadRender() {
                 for (col = 0; col <5; col++) {
-                ctx.drawImage(Resources.get("images/stone-block.png"), col * 101 + 152, 650); //249
+                ctx.drawImage(Resources.get("images/stone-block.png"), col * 101 + 152, 540); //650
               }
             selector.render();
             for (var i = 0; i < chars.length; i++) {
-              ctx.drawImage(Resources.get(chars[i]), i * 101 + 152, 616); //215 34 diff.
+              ctx.drawImage(Resources.get(chars[i]), i * 101 + 152, 504); //34 diff.
             }
         }
         loadRender(); //invoke the loadRender function. call it. make it work.
@@ -284,7 +310,8 @@ var Engine = (function(global) {
         'images/enter.png',
         'images/green_button02.png',
         'images/yellow_button02.png',
-        'images/red_button01.png'
+        'images/red_button01.png',
+        'images/background-11.png',
     ]);
     Resources.onReady(init);
 

@@ -47,6 +47,22 @@ button {
   cursor: pointer;
 }
 
+@-webkit-keyframes wiggle {
+	0% {
+		-webkit-transform:rotate(4deg);
+	}
+	50% {
+		-webkit-transform:rotate(-4deg);
+	}
+	100% {
+		-webkit-transform:rotate(4deg);
+	}
+}
+
+.wiggle {
+	-webkit-animation: wiggle 2.0s infinite;
+}
+
 .easy{
   top: 514px;
   left: 342px;

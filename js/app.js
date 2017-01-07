@@ -3,9 +3,7 @@ var Canvas_width = 808;
 var Canvas_height = 808;
 var Player_start_x = 300;
 var Player_start_y = 575;
-//var win = false; //Whether level has been won; used to trigger animations.
 var play = false; //Whether the game has begun; used to trigger character selector screen
-var difficulty = 0;
 var selectedChar; //Used as pointer for the selected sprite URL in array
 var chars = [ //Array of URLs for player and NPC sprites
     'images/char-boy.png',
@@ -20,27 +18,59 @@ var mediumButton = document.getElementById('medium');
 var hardButton = document.getElementById('hard');
 
 /* Initialize the difficulty to the player's choice, if clicked */
+//Easy difficulty********************************************
 easyButton.addEventListener('click', function () {
-    difficulty = 1;
-    // EnemyL.speed = Math.floor(Math.random() * (200-1)) + 1;
     easyButton.className = 'easy active';
     mediumButton.className = 'medium';
     hardButton.className = 'hard';
+
+  //****Enemy speed based on difficutly****
+  //set left coming enemy speeds faster than 'from right' enemies.
+  //slice the array.....how to refactor this better? maybe way too much code?
+  var enemiesLeft = allEnemies.slice(0,4); //faster
+  var enemiesRight = allEnemies.slice(4,10); //slower
+
+  enemiesLeft.forEach(function(enemy) {
+   enemy.speed = Math.floor(Math.random() * (550-1)) + 1;
+  });
+  enemiesRight.forEach(function(enemy) {
+     enemy.speed = Math.floor(Math.random() * (450-1)) + 1;
+  });
 }, false);
+//Medium difficulty**********************
 mediumButton.addEventListener('click', function () {
-    difficulty = 2;
-    // EnemyL.speed = Math.floor(Math.random() * (2-1)) + 1;
     easyButton.className = 'easy';
     mediumButton.className = 'medium active';
     hardButton.className = 'hard';
+
+    var enemiesLeft = allEnemies.slice(0,4);
+    var enemiesRight = allEnemies.slice(4,10);
+
+  enemiesLeft.forEach(function(enemy) {
+   enemy.speed = Math.floor(Math.random() * (700-1)) + 1;
+  });
+  enemiesRight.forEach(function(enemy) {
+     enemy.speed = Math.floor(Math.random() * (575-1)) + 1;
+  });
 }, false);
+//hard difficulty***********************
 hardButton.addEventListener('click', function () {
-    difficulty = 3;
-    // EnemyL.speed = Math.floor(Math.random() * (50-1)) + 1;
     easyButton.className = 'easy';
     mediumButton.className = 'medium';
     hardButton.className = 'hard active';
+
+    var enemiesLeft = allEnemies.slice(0,4);
+    var enemiesRight = allEnemies.slice(4,10);
+
+  enemiesLeft.forEach(function(enemy) {
+   enemy.speed = Math.floor(Math.random() * (800-1)) + 1;
+  });
+  enemiesRight.forEach(function(enemy) {
+     enemy.speed = Math.floor(Math.random() * (675-1)) + 1;
+  });
 }, false);
+
+
 
 //***********   GAME Class  ********************//
 //************** START, RESET, WIN ********************//
@@ -232,30 +262,6 @@ var EnemyL = function(x,y, originalPosition, width, height) {
   this.width = 70;
   this.height = 60;
   this.sprite = 'images/enemy-bug.png';
-  // this.speed = Math.floor(Math.random() * 400) + 150;\
-  if (difficulty = 1) {
-    this.speed =  Math.floor(Math.random() * (200-1)) + 1;
-  } else if (difficulty = 2) {
-     this.speed = Math.floor(Math.random() * (2-1)) + 1;
-  } else {
-     this.speed = Math.floor(Math.random() * (1000-1)) + 1;
-  }
-  // switch (Difficulty) {
-  //   case 1:
-  //       this.speed =  Math.floor(Math.random() * (200-1)) + 1;
-  //       break;
-  //
-  //   case 2:
-  //       this.speed = Math.floor(Math.random() * (2-1)) + 1;
-  //       break;
-  //
-  //   case 3:
-  //       this.speed = Math.floor(Math.random() * (1000-1)) + 1;
-  //       break;
-  //   default:
-  //     this.speed = Math.floor(Math.random() * (200-1)) + 1;
-  //     break;
-  // }
 };
 
 EnemyL.prototype = Object.create(Entity.prototype);
@@ -271,6 +277,7 @@ EnemyL.prototype.update = function(dt) {
     }
 };
 
+
 var allEnemies = [];
 var enemy0 =  new EnemyL (300,65);
 var enemy1 = new EnemyL (0,65);
@@ -285,24 +292,6 @@ var EnemyR = function(x,y, originalPosition, width, height) {
   this.width = 85; //70
   this.height = 65; //60
   this.sprite = 'images/enemy-bug-r.png';
-  this.speed = Math.floor(Math.random() * 200) + 100;
-//   switch (Difficulty) {
-//     case 1:
-//         this.speed =  Math.floor(Math.random() * (200-1)) + 1;
-//         break;
-//
-//     case 2:
-//         this.speed = Math.floor(Math.random() * (400-1)) + 1;
-//         break;
-//
-//     case 3:
-//         this.speed = Math.floor(Math.random() * (600-1)) + 1;
-//         break;
-//
-//     default:
-//         this.speed = Math.floor(Math.random() * 200) + 100;
-//         break;
-// }
 };
 
 EnemyR.prototype = Object.create(Entity.prototype);
@@ -341,15 +330,15 @@ var Player = function(x,y) {
   this.playerPosition = []; // [ [x,y], [x,y], [x,y], etc... ]
   this.width = 60;
   this.height = 70;
-  this.lives = 3; //how to add on html bar, etc
-  this.sprite = chars[selectedChar]; //'images/char-boy.png';
+  this.lives = 3;
+  this.sprite = chars[selectedChar];
 };
 
 Player.prototype.reset = function() {
   this.x = Player_start_x;
   this.y = Player_start_y;
   this.lives = 3;
-  this.sprite = chars[selectedChar]; //'images/char-boy.png';
+  this.sprite = chars[selectedChar];
 }
 
 // ----when the player collides with enemy -----
@@ -481,6 +470,7 @@ var player = new Player (Player_start_x,Player_start_y);
 function initLoad() {
      selector = new Selector();
 }
+//asdfasdf
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {

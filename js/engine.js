@@ -196,9 +196,6 @@ var Engine = (function(global) {
       document.getElementById('menu').hidden = true;
       //******initial canvas..resuing the CSS background image****
       ctx.drawImage(Resources.get('images/background-11.png'), canvas.width, 680);
-    //  ctx.fillStyle = "#b9defc";
-    //  ctx.rect(0,60,canvas.width, 652);
-    //  ctx.fill();
 
       //I want to use HTML5 canvas, because we learned that for the project. I realize that this could be solved with a simple image made in gimp/photoshop, or manipulating the DOM w/ jQuery, or plain html w/ vanilla JS...right? does that sound remotely correct?  :D
       //maybe using those methods would be easier for creating a Start Menu, but again, I thought it ideal to use HTML canvas for the menu, since we learned it during the lessons.
@@ -307,7 +304,6 @@ var Engine = (function(global) {
         'images/aDown.png',
         'images/aRight.png',
         'images/aUp.png',
-        'images/enter.png',
         'images/green_button02.png',
         'images/yellow_button02.png',
         'images/red_button01.png',

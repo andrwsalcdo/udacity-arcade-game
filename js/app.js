@@ -26,7 +26,7 @@ easyButton.addEventListener('click', function () {
 
   //****Enemy speed based on difficutly****
   //set left coming enemy speeds faster than 'from right' enemies.
-  //slice the array.....how to refactor this better? maybe way too much code?
+  //slice the array.....how to refactor this better? maybe way too much code? following a DRY approach is best, right? i'm glad this works, but again, i feel like this is too much code.
   var enemiesLeft = allEnemies.slice(0,4); //faster
   var enemiesRight = allEnemies.slice(4,10); //slower
 
@@ -63,7 +63,7 @@ hardButton.addEventListener('click', function () {
     var enemiesRight = allEnemies.slice(4,10);
 
   enemiesLeft.forEach(function(enemy) {
-   enemy.speed = Math.floor(Math.random() * (800-1)) + 1;
+   enemy.speed = Math.floor(Math.random() * (850-1)) + 1;
   });
   enemiesRight.forEach(function(enemy) {
      enemy.speed = Math.floor(Math.random() * (675-1)) + 1;
@@ -82,7 +82,7 @@ var Game = function() {
 };
 
 Game.prototype.win = function() {
-    alert ("CONGRATS! YOU WIN!"); //**To play again: Refresh the page**
+    alert ("CONGRATS! YOU WIN! To Play Again: Refresh the webpage");
     this.resetGame();
 };
 
@@ -118,13 +118,12 @@ Game.prototype.resetGame = function() {
     }
 };
 
-var game = new Game;
+var game = new Game();
 
 // ---------- Selector Class ---------- \\
 
 /* Selector used for character selection
- * col Selector column
- * realx Vertical coordinate at which to draw selector
+ *realx Vertical coordinate at which to draw selector
  * y Vertical coordinate
  * alpha Transparency value for the sprite
  * throbdir Direction of visual throb:  transparent & opaque
@@ -174,7 +173,7 @@ Selector.prototype.throb = function() {
             this.throbdir = 'transparent';//'down';
         }
     }
-}
+};
 
 
 //***********   SUPER CLASS   ********************//
@@ -203,7 +202,8 @@ Entity.prototype.render = function() {
 var Rock = function(x,y, originalPosition, width, height) {
   Entity.call (this, x, y, originalPosition, width, height);
   this.sprite = 'images/Rock1.png';
-}
+};
+
 Rock.prototype = Object.create(Entity.prototype);
 
 
@@ -228,7 +228,7 @@ allRocks.push(rock1,rock2,rock3,rock4,rock5,rock6,rock7,rock8,rock9,rock10);
 var Heart = function(x,y, originalPosition, width, height) {
   Entity.call (this, x, y, originalPosition, width, height);
   this.sprite = 'images/Heart1.png';
-}
+};
 
 Heart.prototype = Object.create(Entity.prototype);
 
@@ -320,7 +320,7 @@ allEnemies.push(enemy4,enemy5,enemy6,enemy7,enemy8,enemy9);
 
 //***********   PLAYER   ********************//
 //**************  ********************//
-// Now write your own player class
+// Now write player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(x,y) {
@@ -339,7 +339,7 @@ Player.prototype.reset = function() {
   this.y = Player_start_y;
   this.lives = 3;
   this.sprite = chars[selectedChar];
-}
+};
 
 // ----when the player collides with enemy -----
 Player.prototype.collision = function() {
@@ -468,9 +468,9 @@ var player = new Player (Player_start_x,Player_start_y);
 
 // Instantiates our selector; called in Engine.js before init()
 function initLoad() {
-     selector = new Selector();
+    selector = new Selector();
 }
-//asdfasdf
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {

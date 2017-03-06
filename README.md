@@ -18,7 +18,7 @@ file in your browser to play the game.
 
 ---
 
-ONLINE VERSION of the project: [https://asalcedo07.github.io/udacity-arcade-game/](https://asalcedo07.github.io/udacity-arcade-game/)
+ONLINE VERSION of the project: [https://andrwsalcdo.github.io/udacity-arcade-game/](https://andrwsalcdo.github.io/udacity-arcade-game/)
 
 --------------------
 

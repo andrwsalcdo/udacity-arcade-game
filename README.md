@@ -1,6 +1,6 @@
-###Udacity Front-End Web Developer Nanodegree
+### Udacity Front-End Web Developer Nanodegree
 
-#Classic Arcade Game Clone – “Frogger Clone"
+# Classic Arcade Game Clone – “Frogger Clone"
 
 
 ### Project Requirements
@@ -31,7 +31,7 @@ ONLINE VERSION of the project: [https://andrwsalcdo.github.io/udacity-arcade-gam
 
 ----------------------
 
-###Game Rules
+### Game Rules
 
 -	Goal is to collect all Gems and reach the water.
 - You cannot move through rocks, but bugs can.

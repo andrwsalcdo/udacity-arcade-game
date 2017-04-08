@@ -1,5 +1,3 @@
-###Udacity Front-End Web Developer Nanodegree
-
 #Classic Arcade Game Clone – “Frogger Clone"
 
 
@@ -9,18 +7,22 @@ You will be provided with visual assets and a game loop engine;
 using these tools you must add a number of entities to the game including the
 player characters and enemies to recreate the classic arcade game Frogger.
 
---------------------
+
+<img src="images/menu-frogger.png" width="400"/>
+
+
+<img src="images/frogger.png" width="400" height="400"/>
+
+
 
 ### How to Run the Game
 
 Download the repository in your desktop, unzip it and open the "index.html"
 file in your browser to play the game.
 
----
+
 
 ONLINE VERSION of the project: [https://asalcedo07.github.io/udacity-arcade-game/](https://asalcedo07.github.io/udacity-arcade-game/)
-
---------------------
 
 ### How to Play the Game
 
@@ -29,9 +31,8 @@ ONLINE VERSION of the project: [https://asalcedo07.github.io/udacity-arcade-game
 - Press Enter to choose your player and start the game.
 - To play the game, use the arrow keys from your keyboard to move your player.
 
-----------------------
 
-###Game Rules
+### Game Rules
 
 -	Goal is to collect all Gems and reach the water.
 - You cannot move through rocks, but bugs can.
@@ -39,7 +40,7 @@ ONLINE VERSION of the project: [https://asalcedo07.github.io/udacity-arcade-game
 -	If you touch a bug you lose a life, if you have no lives the game is over.
 - You can pick up Heart(s) to increase your lives by +1.  
 
-----------------------
+
 
 ### Udacity's Instructions
 
@@ -57,7 +58,7 @@ ONLINE VERSION of the project: [https://asalcedo07.github.io/udacity-arcade-game
 -  Identify and code the properties each class must have to accomplish its tasks.
 -  Write the functions that provide functionality to each of your class instances.
 
-----------------------
+
 
 ### Attributions
 
@@ -68,7 +69,7 @@ Background Game Art by <a href='http://opengameart.org/content/2d-backgrounds-se
 
 Game sounds by <a href='http://opengameart.org/content/8-bit-sound-effects-library' target='_blank'>LittleRobotSoundFactory</a> 8 bit sound effects Library (opengameart.org)
 
-----------------------
+
 
 ### License
 
